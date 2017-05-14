@@ -1,37 +1,41 @@
 # Adapt these paths on Windows
 
 # Point this to the boost include folder
-INCLUDEPATH += $$quote(C:/qBittorrent/boost_1_51_0)
+INCLUDEPATH += $$quote(D:/Rain/Programming/qBittorrent/libtorrent/install/boost/include)
 # Point this to the libtorrent include folder
-INCLUDEPATH += $$quote(C:/qBittorrent/RC_0_16/include)
+INCLUDEPATH += $$quote(D:/Rain/Programming/qBittorrent/libtorrent/install/libtorrent/include)
 # Point this to the zlib include folder
-INCLUDEPATH += $$quote(C:/qBittorrent/Zlib/include)
+INCLUDEPATH += $$quote(D:/Rain/Programming/qBittorrent/libtorrent/install/zlib/include)
 # Point this to the openssl include folder
-INCLUDEPATH += $$quote(C:/qBittorrent/openssl/include)
+INCLUDEPATH += $$quote(D:/Rain/Programming/qBittorrent/libtorrent/install/openssl/include)
 
 # Point this to the boost lib folder
-LIBS += $$quote(-LC:/qBittorrent/boost_1_51_0/stage/lib)
+LIBS += $$quote(-LD:/Rain/Programming/qBittorrent/libtorrent/install/boost/lib)
 # Point this to the libtorrent lib folder
-LIBS += $$quote(-LC:/qBittorrent/RC_0_16/bin/path-according-to-the-build-options-chosen)
+LIBS += $$quote(-LD:/Rain/Programming/qBittorrent/libtorrent/install/libtorrent/lib)
 # Point this to the zlib lib folder
-LIBS += $$quote(-LC:/qBittorrent/Zlib/lib)
+LIBS += $$quote(-LD:/Rain/Programming/qBittorrent/libtorrent/install/zlib/lib)
 # Point this to the openssl lib folder
-LIBS += $$quote(-LC:/qBittorrent/openssl/lib)
+LIBS += $$quote(-LD:/Rain/Programming/qBittorrent/libtorrent/install/openssl/lib)
 
 # BOOST DEFINES
 DEFINES += BOOST_ALL_NO_LIB
+DEFINES += BOOST_ASIO_ENABLE_CANCELIO
 DEFINES += BOOST_ASIO_HASH_MAP_BUCKETS=1021
-DEFINES += BOOST_ASIO_SEPARATE_COMPILATION
+#DEFINES += BOOST_ASIO_SEPARATE_COMPILATION
 # After 1.55 some Windows users reported regular UI freezes.
 # This makes ASIO use the pre-1.56 way of doing things. See issue #2003
 DEFINES += BOOST_ASIO_DISABLE_CONNECTEX
 # Boost 1.60+ defaults to Vista+ support. The define below enables XP support again.
 DEFINES += BOOST_USE_WINAPI_VERSION=0x0501
 DEFINES += BOOST_EXCEPTION_DISABLE
-DEFINES += BOOST_SYSTEM_STATIC_LINK=1
+DEFINES += BOOST_ASIO_DYN_LINK
+DEFINES += BOOST_ALL_DYN_LINK
+#DEFINES += BOOST_SYSTEM_STATIC_LINK=1
 
 # LIBTORRENT DEFINES
 DEFINES += TORRENT_USE_OPENSSL
+DEFINES += TORRENT_LINKING_SHARED
 DEFINES += TORRENT_DISABLE_GEO_IP
 DEFINES += TORRENT_DISABLE_RESOLVE_COUNTRIES
 

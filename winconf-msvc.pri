@@ -19,13 +19,15 @@ RC_FILE = qbittorrent.rc
 # Adapt the lib names/versions accordingly
 CONFIG(debug, debug|release) {
   LIBS += libtorrentd.lib \
-          libboost_system-vc90-mt-sgd-1_51.lib
+          boost_system-vc151-mt-gd-1_64.lib
+  QMAKE_LFLAGS += /NODEFAULTLIB:MSVCRT
 } else {
   LIBS += libtorrent.lib \
-          libboost_system-vc90-mt-s-1_51.lib
+          boost_system-vc151-mt-1_64.lib
 }
 
 LIBS += advapi32.lib shell32.lib crypt32.lib User32.lib
 LIBS += libeay32.lib ssleay32.lib
 LIBS += PowrProf.lib
 LIBS += zlib.lib
+LIBS += Ole32.lib
