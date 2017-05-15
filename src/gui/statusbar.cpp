@@ -44,6 +44,7 @@
 #include "base/bittorrent/sessionstatus.h"
 #include "speedlimitdlg.h"
 #include "guiiconprovider.h"
+#include "base/utils/fs.h"
 #include "base/utils/misc.h"
 #include "base/logger.h"
 
@@ -87,6 +88,10 @@ StatusBar::StatusBar(QStatusBar *bar)
     m_DHTLbl = new QLabel(tr("DHT: %1 nodes").arg(0), bar);
     m_DHTLbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
 
+    m_freeSpaceOnDiskLbl = new QLabel(tr("Free space: %1").arg(0), bar);
+    m_freeSpaceOnDiskLbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
+    m_freeSpaceOnDiskLbl->setToolTip(BitTorrent::Session::instance()->defaultSavePath());
+
     m_altSpeedsBtn = new QPushButton(bar);
     m_altSpeedsBtn->setFlat(true);
     m_altSpeedsBtn->setFocusPolicy(Qt::NoFocus);
@@ -119,14 +124,19 @@ StatusBar::StatusBar(QStatusBar *bar)
     m_statusSep4 = new QFrame(bar);
     m_statusSep4->setFrameStyle(QFrame::VLine);
     m_statusSep4->setFrameShadow(QFrame::Raised);
+    m_statusSep5 = new QFrame(bar);
+    m_statusSep5->setFrameStyle(QFrame::VLine);
+    m_statusSep5->setFrameShadow(QFrame::Raised);
     m_layout->addWidget(m_DHTLbl);
     m_layout->addWidget(m_statusSep1);
-    m_layout->addWidget(m_connecStatusLblIcon);
+    m_layout->addWidget(m_freeSpaceOnDiskLbl);
     m_layout->addWidget(m_statusSep2);
+    m_layout->addWidget(m_connecStatusLblIcon);
+    m_layout->addWidget(m_statusSep3);
     m_layout->addWidget(m_altSpeedsBtn);
     m_layout->addWidget(m_statusSep4);
     m_layout->addWidget(m_dlSpeedLbl);
-    m_layout->addWidget(m_statusSep3);
+    m_layout->addWidget(m_statusSep5);
     m_layout->addWidget(m_upSpeedLbl);
 
     bar->addPermanentWidget(m_container);
@@ -224,6 +234,14 @@ void StatusBar::refreshStatusBar()
     updateConnectionStatus(sessionStatus);
     updateDHTNodesNumber(sessionStatus);
     updateSpeedLabels(sessionStatus);
+    updateFreeSpaceOnDisk();
+}
+
+void StatusBar::updateFreeSpaceOnDisk()
+{
+    QString defaultPath = BitTorrent::Session::instance()->defaultSavePath();
+    m_freeSpaceOnDiskLbl->setText(tr("Free space: %1").arg(Utils::Misc::friendlyUnit(Utils::Fs::freeDiskSpaceOnPath(defaultPath))));
+    m_freeSpaceOnDiskLbl->setToolTip(defaultPath);
 }
 
 void StatusBar::updateAltSpeedsBtn(bool alternative)

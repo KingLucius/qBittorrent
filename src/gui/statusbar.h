@@ -69,10 +69,12 @@ private:
     QPushButton *m_dlSpeedLbl;
     QPushButton *m_upSpeedLbl;
     QLabel *m_DHTLbl;
+    QLabel *m_freeSpaceOnDiskLbl;
     QFrame *m_statusSep1;
     QFrame *m_statusSep2;
     QFrame *m_statusSep3;
     QFrame *m_statusSep4;
+    QFrame *m_statusSep5;
     QPushButton *m_connecStatusLblIcon;
     QPushButton *m_altSpeedsBtn;
     QTimer *m_refreshTimer;
@@ -82,6 +84,7 @@ private:
     void updateConnectionStatus(const BitTorrent::SessionStatus &sessionStatus);
     void updateDHTNodesNumber(const BitTorrent::SessionStatus &sessionStatus);
     void updateSpeedLabels(const BitTorrent::SessionStatus &sessionStatus);
+    void updateFreeSpaceOnDisk();
 };
 
 #endif // STATUSBAR_H
